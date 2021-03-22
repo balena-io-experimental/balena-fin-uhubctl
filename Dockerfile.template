@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
   libusb-1.0-0-dev \
   libudev-dev
 
-RUN git clone --depth 1 ${UHUBCTL_REPO} && gitcheckout v${UHUBCTL_VERSION} && cd uhubctl && make -j 16
+RUN git clone --depth 1 ${UHUBCTL_REPO} && git checkout v${UHUBCTL_VERSION} && cd uhubctl && make -j 16
 
 RUN tar -czf uhubctl-v${UHUBCTL_VERSION}.tar.gz /usr/src/app/uhubctl
 
