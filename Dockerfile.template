@@ -1,6 +1,9 @@
 ## buildstep base image
 FROM balenalib/fincm3-debian:buster-build
 
+ENV UHUBCTL_REPO  https://github.com/mvp/uhubctl
+ENV UHUBCTL_VERSION  2.4.0
+
 WORKDIR /usr/src/app
 
 ## install required packages
@@ -9,9 +12,9 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
   libusb-1.0-0-dev \
   libudev-dev
 
-RUN git clone https://github.com/mvp/uhubctl && cd uhubctl && make -j 16
+RUN git clone --depth 1 ${UHUBCTL_REPO} && gitcheckout v${UHUBCTL_VERSION} && cd uhubctl && make -j 16
 
-RUN tar -czf uhubctl.tar.gz /usr/src/app/uhubctl
+RUN tar -czf uhubctl-v${UHUBCTL_VERSION}.tar.gz /usr/src/app/uhubctl
 
 COPY ./start.sh ./
 
